@@ -2,6 +2,7 @@
 #include <raylib.h>
 #include <vector>
 #include <functional>
+#include <cmath>
 
 #include "viewport.hpp"
 
@@ -33,8 +34,22 @@ void plot(std::function<float(float)> f)
 {
 	for (int px {}; px < WIDTH; ++px)
 	{
-		vp.screen_to_world(px);
+		float wx = vp.screen_to_world_x(px);
+		float wy {f(wx)};
+		Vector2 point = vp.world_to_screen(wx, wy);
+		DrawPixel(point.x, point.y, RED);
 	}
+
+}
+
+float f(float x)
+{
+	return x;
+}
+
+float g(float x)
+{
+	return std::sin(x);
 }
 
 int main()
@@ -46,7 +61,9 @@ int main()
 	{
 		BeginDrawing();
 			ClearBackground(BLACK);
-			plot_cross();	
+			plot_cross();
+			plot(g);
+			plot(f);
 		EndDrawing();
 	}
 

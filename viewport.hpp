@@ -24,10 +24,11 @@ struct Viewport
 		return  (Vector2) {px, py};
 	}
 
-	Vector2 screen_to_world(float px, float py)
+	float screen_to_world_x(float px)
 	{
 		// todo
-		;
+		float kx =(static_cast<float>(width)/(xmax - xmin));	
+		float wx = (px/kx) + xmin;
+		return wx;
 	}
-
 };
